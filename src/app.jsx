@@ -9,7 +9,7 @@ function App() {
         <RouterProvider>
             <div className="flex flex-col h-screen">
                 <Navigation />
-                <main className="flex-grow">
+                <main className="flex-grow p-8 bg-gray-100">
                     <Router />
                 </main>
             </div>

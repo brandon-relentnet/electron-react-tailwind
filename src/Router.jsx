@@ -1,20 +1,15 @@
 import React from 'react';
 import { useRouter } from './RouterContext';
-
-// Import your page components
-import HomePage from './pages/HomePage';
-import TimerPage from './pages/TimerPage';
-import SettingsPage from './pages/SettingsPage';
+import navItems from './data/navItems.js';
 
 export default function Router() {
     const { currentPage } = useRouter();
 
-    // Map routes to components
-    const routes = {
-        'home': <HomePage />,
-        'timer': <TimerPage />,
-        'settings': <SettingsPage />
-    };
+    const routes = navItems.reduce((acc, item) => {
+        acc[item.name] = item.page;
+        return acc;
+    }
+        , {});
 
     return routes[currentPage] || <div>Page not found</div>;
 }
