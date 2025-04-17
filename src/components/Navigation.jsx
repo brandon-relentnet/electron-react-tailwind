@@ -1,12 +1,13 @@
 import React from 'react';
 import { useRouter } from '../RouterContext';
 import navItems from '../data/navItems.js';
+import QuickSettings from './QuickSettings.jsx';
 
 export default function Navigation() {
     const { setCurrentPage } = useRouter();
 
     return (
-        <nav className="flex space-x-4 p-4 bg-gray-800 text-white">
+        <nav className="flex space-x-4 p-4 bg-mantle text-text h-16">
             {navItems.map((item) => (
                 <button
                     key={item.name}
@@ -16,6 +17,9 @@ export default function Navigation() {
                     {item.title}
                 </button>
             ))}
+            <div className="flex-grow flex justify-end">
+                <QuickSettings />
+            </div>
         </nav>
     );
 }

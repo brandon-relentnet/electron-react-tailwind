@@ -2,6 +2,7 @@ import React from 'react';
 import HomePage from '../pages/HomePage';
 import Stopwatch from '../pages/Stopwatch';
 import SettingsPage from '../pages/SettingsPage';
+import Timers from '../pages/Timers';
 
 const navItems = [
     {
@@ -18,6 +19,11 @@ const navItems = [
         name: 'settings',
         page: <SettingsPage />,
         title: 'Settings',
+    },
+    {
+        name: 'timers',
+        page: <Timers />,
+        title: 'Timers',
     },
 ];
 

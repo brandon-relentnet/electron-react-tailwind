@@ -3,16 +3,22 @@ import { createRoot } from 'react-dom/client';
 import { RouterProvider } from './RouterContext';
 import Router from './Router';
 import Navigation from './components/Navigation.jsx';
+import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
+import { GridLayoutProvider } from './components/GridLayoutContext';
 
 function App() {
     return (
         <RouterProvider>
-            <div className="flex flex-col h-screen">
-                <Navigation />
-                <main className="flex-grow p-8 bg-gray-100">
-                    <Router />
-                </main>
-            </div>
+            <GridLayoutProvider>
+                <div className="flex flex-col h-screen overflow-hidden">
+                    <Navigation />
+                    <OverlayScrollbarsComponent defer>
+                        <main className="flex-grow p-8 text-text overflow-auto">
+                            <Router />
+                        </main>
+                    </OverlayScrollbarsComponent>
+                </div>
+            </GridLayoutProvider>
         </RouterProvider>
     );
 }
