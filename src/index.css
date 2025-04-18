@@ -27,6 +27,8 @@
   --color-base: #1e1e2e;
   --color-mantle: #181825;
   --color-crust: #11111b;
+
+  --color-accent: #f5c2e7;
 }
 
 [data-theme="light"] {
@@ -48,9 +50,9 @@
 }
 
 .os-theme-dark {
-  --os-handle-bg: var(--color-muted) !important;
-  --os-handle-bg-hover: var(--color-subtle) !important;
-  --os-handle-bg-active: var(--color-text) !important;
+  --os-handle-bg: var(--color-surface-1) !important;
+  --os-handle-bg-hover: var(--color-surface-2) !important;
+  --os-handle-bg-active: var(--color-accent) !important;
 }
 
 html {

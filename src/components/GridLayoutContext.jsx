@@ -1,21 +1,25 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
+import { ArrowsPointingInIcon, Squares2X2Icon, ArrowsPointingOutIcon } from "@heroicons/react/24/solid"
 
 // Define layout options
 const layoutOptions = {
     comfort: {
         name: "Comfort",
         columns: 2,
-        responsive: "grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3"
+        responsive: "grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3",
+        component: ArrowsPointingOutIcon
     },
     classic: {
         name: "Classic",
         columns: 4,
-        responsive: "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4"
+        responsive: "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4",
+        component: Squares2X2Icon
     },
     compact: {
         name: "Compact",
         columns: 6,
-        responsive: "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
+        responsive: "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6",
+        component: ArrowsPointingInIcon
     }
 };
 
@@ -64,6 +68,7 @@ export function GridLayoutProvider({ children }) {
 
     // Handle manual column adjustment
     const handleColumnChange = (e) => {
+        console.log("handle column change: " + e.target.value);
         setUserColumns(parseInt(e.target.value, 10));
     };
 

@@ -7,7 +7,7 @@ export default function Navigation() {
     const { setCurrentPage } = useRouter();
 
     return (
-        <nav className="flex space-x-4 p-4 bg-mantle text-text h-16">
+        <nav className="flex space-x-4 p-4 bg-base text-text h-16">
             {navItems.map((item) => (
                 <button
                     key={item.name}

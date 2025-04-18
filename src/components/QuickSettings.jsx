@@ -2,6 +2,8 @@ import React from "react";
 import { useGridLayout } from "./GridLayoutContext";
 import { AnimatePresence, motion } from "motion/react"
 import { useState } from "react"
+import { WrenchIcon, WrenchScrewdriverIcon } from "@heroicons/react/24/solid"
+import ColumnSelector from "./ColumnSelector";
 
 export default function QuickSettings() {
     const {
@@ -13,89 +15,74 @@ export default function QuickSettings() {
         handleColumnChange,
         toggleResponsive
     } = useGridLayout();
-    const [isVisible, setIsVisible] = useState(true)
-
-    const PopupMenu = () => {
-        return (
-            <div className="flex flex-col gap-4 bg-white border-2 border-yellow-500 rounded-lg p-4 shadow-md">
-                <h3 className="text-lg font-medium">Layout Style</h3>
-                <div className="flex gap-4">
-                    {Object.keys(layoutOptions).map((option) => (
-                        <button
-                            key={option}
-                            onClick={() => handleLayoutChange(option)}
-                            className={`px-4 py-2 rounded-md ${layoutType === option
-                                ? "bg-blue-500 text-white"
-                                : "bg-gray-200 text-gray-800 hover:bg-gray-300"
-                                }`}
-                        >
-                            {layoutOptions[option].name}
-                        </button>
-                    ))}
-                </div>
-
-                {/* Responsive toggle */}
-                <div className="flex items-center gap-2">
-                    <label className="relative inline-flex items-center cursor-pointer">
-                        <input
-                            type="checkbox"
-                            checked={useResponsive}
-                            onChange={toggleResponsive}
-                            className="sr-only peer"
-                        />
-                        <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                        <span className="ml-3 text-sm font-medium text-gray-900">Responsive Layout</span>
-                    </label>
-                </div>
-
-                {/* Custom column slider (only shown when responsive is off) */}
-                {!useResponsive && (
-                    <div className="relative mt-4">
-                        <label htmlFor="columns-range" className="block mb-2 text-sm font-medium">
-                            Number of Columns: {userColumns}
-                        </label>
-                        <input
-                            id="columns-range"
-                            type="range"
-                            min="1"
-                            max="8"
-                            value={userColumns}
-                            onChange={handleColumnChange}
-                            step="1"
-                            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                        />
-                    </div>
-                )}
-            </div>
-        )
-    }
+    const [isVisible, setIsVisible] = useState(false);
 
     return (
         <>
-            <div className="relative inline-block">
-                <motion.button
-                    className="bg-blue-500 text-white rounded-lg px-4 py-2 shadow-md hover:bg-blue-600 w-auto"
-                    onClick={() => setIsVisible(!isVisible)}
-                    whileTap={{ y: 1 }}
-                >
-                    {isVisible ? "Hide" : "Show"}
-                </motion.button>
-                <AnimatePresence initial={false}>
-                    {isVisible ? (
-                        <motion.div
-                            className="absolute mt-2 right-0 bg-overlay rounded-xl shadow-md z-50"
-                            initial={{ opacity: 0, scale: 0, x: -25 }}
-                            transition={{ duration: 0.2 }}
-                            animate={{ opacity: 1, scale: 1, x: 0 }}
-                            exit={{ opacity: 0, scale: 0, x: -25 }}
-                            key="box"
-                            style={{ transformOrigin: 'top right' }}
+            
+            <AnimatePresence initial={false}>
+                {isVisible && (
+                    <motion.div
+                        className="mt-2 right-0 bg-overlay rounded-xl shadow-md z-50"
+                        initial={{ opacity: 0, scale: 0 }}
+                        transition={{ duration: 0.15 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0 }}
+                        key="box"
+                        style={{ transformOrigin: 'top right' }}
+                    >
+                        <div
+                            className="flex flex-col p-4 bg-surface-0 rounded-xl shadow-md"
                         >
-                            <PopupMenu />
-                        </motion.div>
-                    ) : null}
-                </AnimatePresence>
-            </div>
+                            <h3 className="text-lg font-medium">Layout Style</h3>
+                            <div className="flex gap-4">
+                                {Object.keys(layoutOptions).map((option) => (
+                                    <motion.button
+                                        key={option}
+                                        whileTap={{ y: 1 }}
+                                        onClick={() => handleLayoutChange(option)}
+                                        className={`flex flex-col justify-center items-center px-4 py-2 rounded-xl cursor-pointer transition duration-300 ${layoutType === option
+                                            ? "bg-mantle text-text shadow-lg"
+                                            : "bg-surface-0 text-subtext-1 hover:bg-surface-1"
+                                            }`}
+                                    >
+                                        {React.createElement(layoutOptions[option].component, { className: "size-6" })}
+                                        <span className="ml-2">{layoutOptions[option].name}</span>
+                                    </motion.button>
+                                ))}
+                            </div>
+
+                            {/* Responsive toggle */}
+                            <button
+                                className="toggle-container bg-surface-1/30 rounded-full shadow-md p-2 w-24 h-12 flex cursor-pointer"
+                                style={{ justifyContent: "flex-" + (!useResponsive ? "start" : "end") }}
+                                onClick={toggleResponsive}
+                            >
+                                <motion.div
+                                    className="toggle-handle aspect-square bg-pink rounded-full h-full"
+                                    layout
+                                    layoutId="toggle-handle"
+                                    transition={{
+                                        type: "spring",
+                                        visualDuration: 0.2,
+                                        bounce: 0.2,
+                                    }}
+                                />
+                            </button>
+
+                            {/* Column selector with animation */}
+                            <ColumnSelector userColumns={userColumns} handleColumnChange={handleColumnChange} useResponsive={useResponsive} />
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+            <motion.button
+                className={`px-4 py-2 w-auto cursor-pointer text-subtext-0 hover:text-subtext-0 active:text-text ${isVisible ? "text-text hover:text-text" : ""}`}
+                onClick={() => setIsVisible(!isVisible)}
+                whileTap={{ y: 1 }}
+            >
+                {!isVisible ? <WrenchIcon className="size-6" /> : <WrenchScrewdriverIcon className="size-6" />}
+            </motion.button>
         </>
     );
 }
