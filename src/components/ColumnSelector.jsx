@@ -7,7 +7,6 @@ export default function ColumnSelector({ userColumns, handleColumnChange, useRes
             {console.log("column selector")}
             {useResponsive && (
                 <motion.div
-                    layout
                     key="columns"
                     className="overflow-hidden"
                     initial="collapsed"
@@ -22,7 +21,7 @@ export default function ColumnSelector({ userColumns, handleColumnChange, useRes
                         bounce: 0.2,
                         duration: 0.3,
                         when: "beforeChildren",
-                        delayChildren: 0.05,
+                        delayChildren: 0.1,
                         staggerChildren: 0.1
                     }}
                 >

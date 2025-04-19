@@ -17,7 +17,7 @@ export default function Navigation() {
                     {item.title}
                 </button>
             ))}
-            <div className="flex-grow flex justify-end">
+            <div className="flex-grow flex flex-col items-end rounded-xl">
                 <QuickSettings />
             </div>
         </nav>
